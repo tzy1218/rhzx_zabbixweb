@@ -3,16 +3,8 @@ package com.rmyh.report.controller;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.http.HttpEntity;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,17 +15,18 @@ import java.util.List;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 
-import com.alibaba.fastjson.JSONObject;
-import com.rmyh.report.bean.TriggerBean;
 import com.rmyh.report.bean.XNDataBean;
 import com.rmyh.report.excel.bean.XnBean;
-import com.rmyh.report.excel.bean.ZbBean;
 import com.rmyh.report.excel.style.XnExportExcel;
-import com.rmyh.report.excel.style.ZbExportExcel;
 import com.rmyh.report.service.Dataquery;
 
 @WebServlet(asyncSupported = true, urlPatterns = { "/excel/getPerfExcel" })
 public class getPerfExcel extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public getPerfExcel() {
 		super();
 	}
@@ -66,9 +59,9 @@ public class getPerfExcel extends HttpServlet {
 				e.printStackTrace();
 			}
 		Collections.sort(XNDataBeanList);
-		List<List<XnBean>> resBean = new ArrayList();
+		List<List<XnBean>> resBean = new ArrayList<List<XnBean>>();
 		XnExportExcel export = new XnExportExcel();
-		List<XnBean> tmpBean = new ArrayList();
+		List<XnBean> tmpBean = new ArrayList<XnBean>();
 
 		for (int i = 0, groupIdPre = 0; i < XNDataBeanList.size(); i++) {
 			XNDataBean bean = XNDataBeanList.get(i);
@@ -76,7 +69,7 @@ public class getPerfExcel extends HttpServlet {
 				if (i != 0) {
 					resBean.add(tmpBean);
 				}
-				tmpBean = new ArrayList();
+				tmpBean = new ArrayList<XnBean>();
 				XnBean xnBean = new XnBean();
 				xnBean.setSbName(bean.getHostName());
 //				xnBean.setIpAddress(bean.getHostIp());

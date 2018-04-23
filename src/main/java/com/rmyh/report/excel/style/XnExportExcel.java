@@ -8,8 +8,6 @@ import java.util.Properties;
 
 import org.apache.poi.hssf.record.cf.FontFormatting;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 
@@ -31,7 +29,7 @@ public static String excelNamePre = "Perf";
 	
 	public void Export (String startTime, String endTime, List<List <XnBean>> list) throws IOException {
 		
-		Properties prop = initProp();
+//		Properties prop = initProp();
 		
 		HSSFWorkbook wb = new HSSFWorkbook();
 		
@@ -321,6 +319,7 @@ public static String excelNamePre = "Perf";
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	public void makeFixedPart (HSSFWorkbook wb,HSSFSheet sheet,int sheetId) {
 		// 给单子名称一个长度
 		sheet.setDefaultColumnWidth((short) 33);

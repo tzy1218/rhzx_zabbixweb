@@ -34,7 +34,7 @@ public class Dataquery {
 	// // logg4j. getTime +""+data insert hbase success
 	// }
 
-	public static List<XNDataBean> getXNDataByWTime(long startTime, long stopTime) throws ParseException {
+	public List<XNDataBean> getXNDataByWTime(long startTime, long stopTime) throws ParseException {
 		// GetHistoryBeanList historyBean = new GetHistoryBeanList();
 		// List<ItemBean> itemBeans = new GetItems().getAllItems_App();
 		HbaseConnectionFactory.init(url);
@@ -43,7 +43,7 @@ public class Dataquery {
 
 		HbaseConnectionFactory.init(url);
 		HbaseTools hbtquery = new HbaseTools();
-		List<XNDataBean> result = new ArrayList();
+		List<XNDataBean> result = new ArrayList<XNDataBean>();
 		for (ItemBean bean : itemBeanList) {
 			int itemId = bean.getItemId();
 			XNDataBean dataqueryresult = hbtquery.getXNValueByTime(hbaseXNTableName, startTime, stopTime, itemId);
@@ -62,14 +62,14 @@ public class Dataquery {
 		// logg4j. getTime +""+data insert hbase success
 	}
 
-	public static List<AlertBean> getAlertDataByWTime(long startTime, long stopTime) throws ParseException {
+	public List<AlertBean> getAlertDataByWTime(long startTime, long stopTime) throws ParseException {
 
 		HbaseConnectionFactory.init(url);
 		HbaseTools hbtquery = new HbaseTools();
 		List<AlertBean> alertBeans = hbtquery.getAlertBeans(hbaseAlertTableName, startTime, stopTime);
-		List<AlertBean> alertCountBeans = new ArrayList();
+		List<AlertBean> alertCountBeans = new ArrayList<AlertBean>();
 		OUT: for (AlertBean alertbean : alertBeans) {
-			IN: for (AlertBean countbean : alertCountBeans) {
+			for (AlertBean countbean : alertCountBeans) {
 				if (alertbean.getHostId() == countbean.getHostId()
 						&& alertbean.getAlertTitle().equals(countbean.getAlertTitle())) {
 					countbean.setAlertTimes((Integer) (countbean.getALertTimes() + 1));
@@ -86,7 +86,7 @@ public class Dataquery {
 		return alertCountBeans;
 	}
 
-	public static List<TriggerBean> getAllTriggers_App(long startTime, long stopTime) throws ParseException {
+	public List<TriggerBean> getAllTriggers_App(long startTime, long stopTime) throws ParseException {
 
 		HbaseConnectionFactory.init(url);
 		HbaseTools hbtquery = new HbaseTools();

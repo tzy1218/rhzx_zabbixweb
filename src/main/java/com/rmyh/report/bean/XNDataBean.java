@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
-import com.rmyh.report.bean.XNDataBeanInterface;
+//import com.rmyh.report.bean.XNDataBeanInterface;
 
-public class XNDataBean implements XNDataBeanInterface,Comparable<XNDataBean> {
+public class XNDataBean implements Comparable<XNDataBean> {
 
 	// public final static String Family1 = "basic_info";
 	public final static String Family2 = "value_info";

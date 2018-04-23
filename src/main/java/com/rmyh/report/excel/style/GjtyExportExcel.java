@@ -1,6 +1,5 @@
 package com.rmyh.report.excel.style;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -10,8 +9,6 @@ import java.io.*;
 
 import org.apache.poi.hssf.record.cf.FontFormatting;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 
@@ -40,6 +37,7 @@ public class GjtyExportExcel {
 
     
 
+	@SuppressWarnings("deprecation")
 	public void Export(String startTime,String endTime,List<GjBean> list) throws IOException {
 		
 		Properties prop = initProp();

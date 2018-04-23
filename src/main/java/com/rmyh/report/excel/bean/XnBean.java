@@ -1,8 +1,5 @@
 package com.rmyh.report.excel.bean;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-
 public class XnBean {
 
 	public String sbName = "";// 设备名称

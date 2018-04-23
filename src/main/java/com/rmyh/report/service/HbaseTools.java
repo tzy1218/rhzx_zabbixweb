@@ -3,7 +3,6 @@ package com.rmyh.report.service;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +29,6 @@ import com.rmyh.report.bean.AlertBean;
 import com.rmyh.report.bean.ItemBean;
 import com.rmyh.report.bean.TriggerBean;
 import com.rmyh.report.bean.XNDataBean;
-import com.rmyh.report.bean.XNDataBeanInterface;
 import com.rmyh.report.controller.General;
 import com.rmyh.report.dao.HbaseConnection;
 import com.rmyh.report.dao.HbaseConnectionFactory;
@@ -67,7 +65,7 @@ public class HbaseTools implements Serializable {
 				table.setWriteBufferSize(104857600);
 
 				table.setAutoFlush(false);
-				for (XNDataBeanInterface dataBean : dataBeans) {
+				for (XNDataBean dataBean : dataBeans) {
 					puts.add(putDataColumns(dataBean, tableName));
 				}
 				table.put(puts);
@@ -103,10 +101,10 @@ public class HbaseTools implements Serializable {
 		// TODO
 		HTable table = null;
 		HbaseConnection hbCon = null;
-		Class beanClass = null;
+		Class<? extends XNDataBean> beanClass = null;
 		Field[] fields = null;
 		XNDataBean tb = new XNDataBean();
-		beanClass = (Class) tb.getClass();
+		beanClass = tb.getClass();
 		fields = beanClass.getFields();
 		String rowKey = key;
 		Get get = null;
@@ -164,10 +162,10 @@ public class HbaseTools implements Serializable {
 		return null;
 	}
 
-	public Put putDataColumns(XNDataBeanInterface db, String tableName) {
+	public Put putDataColumns(XNDataBean db, String tableName) {
 		// 閿熸枻鎷烽敓鏂ゆ嫹TransMonResultBean閿熸枻鎷�
 
-		Class beanClass = null;
+		Class<? extends XNDataBean> beanClass = null;
 		Field[] fields = null;
 		// 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓琛楄鎷�
 		Put put = null;
@@ -177,7 +175,7 @@ public class HbaseTools implements Serializable {
 
 			if (db instanceof XNDataBean) {
 				XNDataBean tb = (XNDataBean) db;
-				beanClass = (Class) tb.getClass();
+				beanClass = (Class<? extends XNDataBean>) tb.getClass();
 				fields = beanClass.getFields();
 				new Date();
 				String familyName = "";
@@ -214,13 +212,13 @@ public class HbaseTools implements Serializable {
 		// String tableName, String startTime, String stopTime, Integer itemId,
 		// TODO
 		List<XNDataBean> transBeanList = new ArrayList<XNDataBean>();
-		Class beanClass = null;
+		Class<? extends XNDataBean> beanClass = null;
 		Field[] fields = null;
 		HTable table = null;
 		ResultScanner scanner = null;
 		SingleColumnValueFilter scanItemid = null;
 
-		SimpleDateFormat sdfM = new SimpleDateFormat("yyyyMMddHHmm");
+		new SimpleDateFormat("yyyyMMddHHmm");
 		String startTimeS = sdf.format(new Date(startTime));
 		String stopTimeS = sdf.format(new Date(stopTime));
 
@@ -255,9 +253,9 @@ public class HbaseTools implements Serializable {
 			scan.setFilter(filterList);
 			scanner = table.getScanner(scan);
 			// 閿熸枻鎷烽敓鏂ゆ嫹鎵敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熻锛屾枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹鎷ラ敓绲st閿熸枻鎷�
-			GO: for (Result result : scanner) {
+			for (Result result : scanner) {
 				XNDataBean tb = new XNDataBean();
-				beanClass = (Class) tb.getClass();
+				beanClass = (Class<? extends XNDataBean>) tb.getClass();
 				fields = beanClass.getFields();
 				// 閿熷彨鏂嚖鎷烽敓鎴鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓绐栴垽鎷烽敓鏂ゆ嫹閿熸彮顏庢嫹閿熸枻鎷烽敓鏂ゆ嫹姘愰敓鏂ゆ嫹閿熸嵎纰夋嫹閿熸枻鎷烽敓鎻紮鎷烽敓鏂ゆ嫹鏆敓鏂ゆ嫹閿熸彮浼欐嫹閿熺粸鎲嬫嫹閿熸枻鎷烽敓鏂ゆ嫹scan
 
@@ -326,10 +324,8 @@ public class HbaseTools implements Serializable {
 
 	public XNDataBean getXNValueByTime(String tableName, long startTime, long stopTime, int itemId)
 			throws java.text.ParseException {
-		// String tableName, String startTime, String stopTime, Integer itemId,
-		// TODO
-		List<XNDataBean> transBeanList = new ArrayList<XNDataBean>();
-		Class beanClass = null;
+		new ArrayList<XNDataBean>();
+		Class<? extends XNDataBean> beanClass = null;
 		Field[] fields = null;
 		HTable table = null;
 		ResultScanner scanner = null;
@@ -364,7 +360,7 @@ public class HbaseTools implements Serializable {
 			int listnum = 0;
 			for (Result result : scanner) { // GO:
 				XNDataBean tb = new XNDataBean();
-				beanClass = (Class) tb.getClass();
+				beanClass = (Class<? extends XNDataBean>) tb.getClass();
 				fields = beanClass.getFields();
 				for (Cell cell : result.rawCells()) {
 					for (Field field : fields) {
@@ -446,18 +442,15 @@ public class HbaseTools implements Serializable {
 		return null;
 	}
 
-	public static List<ItemBean> getItemBeans(String tableName, long stopTime) throws java.text.ParseException {
+	public List<ItemBean> getItemBeans(String tableName, long stopTime) throws java.text.ParseException {
 		// String tableName, String startTime, String stopTime, Integer itemId,
 		// TODO
 		List<ItemBean> BeanList = new ArrayList<ItemBean>();
-		Class beanClass = null;
+		Class<? extends ItemBean> beanClass = null;
 		Field[] fields = null;
 		HTable table = null;
 		ResultScanner scanner = null;
-		SingleColumnValueFilter scanItemid = null;
-
-		// 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓浠嬶紝閿熸枻鎷烽敓鐭櫢鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷峰師閿熸枻鎷�
-		FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+		new FilterList(FilterList.Operator.MUST_PASS_ALL);
 		ExecutorService pool = Executors.newFixedThreadPool(50);
 		HbaseConnection hbCon = HbaseConnectionFactory.getHbaseConnection();
 		// 涓洪敓鏂ゆ嫹椤甸敓鏂ゆ嫹閿熸枻鎷烽敓渚ュ嚖鎷疯閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷锋噲閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
@@ -470,9 +463,7 @@ public class HbaseTools implements Serializable {
 			scan.setCaching(10000);
 			// 閿熷彨璁规嫹閿熸枻鎷烽敓缁炵》鎷烽敓杞匡拷"閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷峰叏閿熸枻鎷风墶閿熸彮浼欐嫹閿岄敓缁炵磩can
 
-			// scan.setMaxResultSize(1);
-			// scan.setMaxResultsPerColumnFamily(1);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+			new SimpleDateFormat("yyyyMMddHHmm");
 			// String stopTimeS = sdf.format(new Date(stopTime));
 			String startTimeRow = getItemNearlyRow(tableName, stopTime, true);
 			String startTimeS = startTimeRow.substring(startTimeRow.indexOf("T") + 1, startTimeRow.indexOf("I"));
@@ -501,9 +492,9 @@ public class HbaseTools implements Serializable {
 			// (stopTime-600000));}
 
 			// 閿熸枻鎷烽敓鏂ゆ嫹鎵敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熻锛屾枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹鎷ラ敓绲st閿熸枻鎷�
-			GO: for (Result result : scanner) {
+			for (Result result : scanner) {
 				ItemBean tb = new ItemBean();
-				beanClass = (Class) tb.getClass();
+				beanClass = (Class<? extends ItemBean>) tb.getClass();
 				fields = beanClass.getFields();
 				// 閿熷彨鏂嚖鎷烽敓鎴鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓绐栴垽鎷烽敓鏂ゆ嫹閿熸彮顏庢嫹閿熸枻鎷烽敓鏂ゆ嫹姘愰敓鏂ゆ嫹閿熸嵎纰夋嫹閿熸枻鎷烽敓鎻紮鎷烽敓鏂ゆ嫹鏆敓鏂ゆ嫹閿熸彮浼欐嫹閿熺粸鎲嬫嫹閿熸枻鎷烽敓鏂ゆ嫹scan
 
@@ -578,17 +569,10 @@ public class HbaseTools implements Serializable {
 
 	
 	public static String getItemNearlyRow(String tableName, long stopTime, boolean reversed) throws java.text.ParseException {
-		// String tableName, String startTime, String stopTime, Integer itemId,
-		// TODO
-		List<ItemBean> BeanList = new ArrayList<ItemBean>();
-		Class beanClass = null;
-		Field[] fields = null;
+		new ArrayList<ItemBean>();
 		HTable table = null;
 		ResultScanner scanner = null;
-		SingleColumnValueFilter scanItemid = null;
-
-		// 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓浠嬶紝閿熸枻鎷烽敓鐭櫢鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷峰師閿熸枻鎷�
-		FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+		new FilterList(FilterList.Operator.MUST_PASS_ALL);
 		ExecutorService pool = Executors.newFixedThreadPool(50);
 		HbaseConnection hbCon = HbaseConnectionFactory.getHbaseConnection();
 		// 涓洪敓鏂ゆ嫹椤甸敓鏂ゆ嫹閿熸枻鎷烽敓渚ュ嚖鎷疯閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷锋噲閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
@@ -608,7 +592,7 @@ public class HbaseTools implements Serializable {
 			scan.setStartRow(Bytes.toBytes("T" + stopTimeS));
 			scanner = table.getScanner(scan);
 
-			GO: for (Result result : scanner) {
+			for (Result result : scanner) {
 				for (Cell cell : result.rawCells()) {
 					// System.out.println(CellUtil.getCellKeyAsString(cell));
 					return CellUtil.getCellKeyAsString(cell);
@@ -637,18 +621,15 @@ public class HbaseTools implements Serializable {
 		return "";
 	}
 	
-	public static List<TriggerBean> getTriggerBeans(String tableName, long stopTime) throws java.text.ParseException {
+	public List<TriggerBean> getTriggerBeans(String tableName, long stopTime) throws java.text.ParseException {
 		// String tableName, String startTime, String stopTime, Integer itemId,
 		// TODO
 		List<TriggerBean> BeanList = new ArrayList<TriggerBean>();
-		Class beanClass = null;
+		Class<? extends TriggerBean> beanClass = null;
 		Field[] fields = null;
 		HTable table = null;
 		ResultScanner scanner = null;
-		SingleColumnValueFilter scanItemid = null;
-
-		// 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓浠嬶紝閿熸枻鎷烽敓鐭櫢鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷峰師閿熸枻鎷�
-		FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+		new FilterList(FilterList.Operator.MUST_PASS_ALL);
 		ExecutorService pool = Executors.newFixedThreadPool(50);
 		HbaseConnection hbCon = HbaseConnectionFactory.getHbaseConnection();
 		// 涓洪敓鏂ゆ嫹椤甸敓鏂ゆ嫹閿熸枻鎷烽敓渚ュ嚖鎷疯閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷锋噲閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
@@ -661,9 +642,7 @@ public class HbaseTools implements Serializable {
 			scan.setCaching(10000);
 			// 閿熷彨璁规嫹閿熸枻鎷烽敓缁炵》鎷烽敓杞匡拷"閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷峰叏閿熸枻鎷风墶閿熸彮浼欐嫹閿岄敓缁炵磩can
 
-			// scan.setMaxResultSize(1);
-			// scan.setMaxResultsPerColumnFamily(1);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+			new SimpleDateFormat("yyyyMMddHHmm");
 			// String stopTimeS = sdf.format(new Date(stopTime));
 			String startTimeRow = getTriggerNearlyRow(tableName, stopTime, true);
 			String startTimeS = startTimeRow.substring(startTimeRow.indexOf("T") + 1, startTimeRow.indexOf("TR")); //T152000TR11111
@@ -692,9 +671,9 @@ public class HbaseTools implements Serializable {
 			// (stopTime-600000));}
 
 			// 閿熸枻鎷烽敓鏂ゆ嫹鎵敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熻锛屾枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹鎷ラ敓绲st閿熸枻鎷�
-			GO: for (Result result : scanner) {
+			for (Result result : scanner) {
 				TriggerBean tb = new TriggerBean();
-				beanClass = (Class) tb.getClass();
+				beanClass = (Class<? extends TriggerBean>) tb.getClass();
 				fields = beanClass.getFields();
 				// 閿熷彨鏂嚖鎷烽敓鎴鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓绐栴垽鎷烽敓鏂ゆ嫹閿熸彮顏庢嫹閿熸枻鎷烽敓鏂ゆ嫹姘愰敓鏂ゆ嫹閿熸嵎纰夋嫹閿熸枻鎷烽敓鎻紮鎷烽敓鏂ゆ嫹鏆敓鏂ゆ嫹閿熸彮浼欐嫹閿熺粸鎲嬫嫹閿熸枻鎷烽敓鏂ゆ嫹scan
 
@@ -768,17 +747,10 @@ public class HbaseTools implements Serializable {
 	}
 
 	public static String getTriggerNearlyRow(String tableName, long stopTime, boolean reversed) throws java.text.ParseException {
-		// String tableName, String startTime, String stopTime, Integer itemId,
-		// TODO
-		List<ItemBean> BeanList = new ArrayList<ItemBean>();
-		Class beanClass = null;
-		Field[] fields = null;
+		new ArrayList<ItemBean>();
 		HTable table = null;
 		ResultScanner scanner = null;
-		SingleColumnValueFilter scanItemid = null;
-
-		// 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓浠嬶紝閿熸枻鎷烽敓鐭櫢鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷峰師閿熸枻鎷�
-		FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+		new FilterList(FilterList.Operator.MUST_PASS_ALL);
 		ExecutorService pool = Executors.newFixedThreadPool(50);
 		HbaseConnection hbCon = HbaseConnectionFactory.getHbaseConnection();
 		// 涓洪敓鏂ゆ嫹椤甸敓鏂ゆ嫹閿熸枻鎷烽敓渚ュ嚖鎷疯閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷锋噲閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
@@ -798,7 +770,7 @@ public class HbaseTools implements Serializable {
 			scan.setStartRow(Bytes.toBytes("TR" + stopTimeS));
 			scanner = table.getScanner(scan);
 
-			GO: for (Result result : scanner) {
+			for (Result result : scanner) {
 				for (Cell cell : result.rawCells()) {
 					// System.out.println(CellUtil.getCellKeyAsString(cell));
 					return CellUtil.getCellKeyAsString(cell);
@@ -829,10 +801,8 @@ public class HbaseTools implements Serializable {
 		
 	public List<AlertBean> getAlertBeans(String tableName, long startTime, long stopTime)
 			throws java.text.ParseException {
-		// String tableName, String startTime, String stopTime, Integer itemId,
-		// TODO
-		List<AlertBean> transBeanList = new ArrayList<AlertBean>();
-		Class beanClass = null;
+		new ArrayList<AlertBean>();
+		Class<? extends AlertBean> beanClass = null;
 		Field[] fields = null;
 		HTable table = null;
 		ResultScanner scanner = null;
@@ -847,10 +817,10 @@ public class HbaseTools implements Serializable {
 			scan.setStartRow(Bytes.toBytes(startRowS));
 			scan.setStopRow(Bytes.toBytes(stopRowS));
 			scanner = table.getScanner(scan);
-			List<AlertBean> resultAlertBean = new ArrayList();
+			List<AlertBean> resultAlertBean = new ArrayList<AlertBean>();
 			for (Result result : scanner) { // GO:
 				AlertBean tb = new AlertBean();
-				beanClass = (Class) tb.getClass();
+				beanClass = (Class<? extends AlertBean>) tb.getClass();
 				fields = beanClass.getFields();
 				for (Cell cell : result.rawCells()) {
 					for (Field field : fields) {

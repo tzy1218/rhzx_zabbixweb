@@ -1,8 +1,5 @@
 package com.rmyh.report.excel.bean;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-
 public class GjBean {
 
     public String gjTime = null;//时间

@@ -3,39 +3,29 @@ package com.rmyh.report.controller;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.http.HttpEntity;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 
-import com.alibaba.fastjson.JSONObject;
-import com.rmyh.report.bean.TriggerBean;
 import com.rmyh.report.bean.AlertBean;
 import com.rmyh.report.excel.bean.GjBean;
-import com.rmyh.report.excel.bean.XnBean;
-import com.rmyh.report.excel.bean.ZbBean;
 import com.rmyh.report.excel.style.GjtyExportExcel;
-import com.rmyh.report.excel.style.XnExportExcel;
-import com.rmyh.report.excel.style.ZbExportExcel;
 import com.rmyh.report.service.Dataquery;
 
 @WebServlet(asyncSupported = true, urlPatterns = { "/excel/getAlertExcel" })
 public class getAlertExcel extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public getAlertExcel() {
 		super();
 	}
@@ -61,8 +51,8 @@ public class getAlertExcel extends HttpServlet {
 		String startTime = dataFormat2.format(startTimeD);
 		String endTime = dataFormat2.format(endTimeD);
 		String filename = "Alert" + startTime + endTime + ".xls";
-		List<AlertBean> AlertBeanList = new ArrayList();
-		List<GjBean> gjBeanList = new ArrayList();
+		List<AlertBean> AlertBeanList = new ArrayList<AlertBean>();
+		List<GjBean> gjBeanList = new ArrayList<GjBean>();
 			try {
 				AlertBeanList = new Dataquery().getAlertDataByWTime(startTimeL, endTimeL);
 			} catch (ParseException e) {

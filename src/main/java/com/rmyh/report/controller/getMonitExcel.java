@@ -3,16 +3,8 @@ package com.rmyh.report.controller;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.http.HttpEntity;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,16 +15,18 @@ import java.util.List;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 
-import com.alibaba.fastjson.JSONObject;
 import com.rmyh.report.bean.TriggerBean;
-import com.rmyh.report.excel.bean.XnBean;
 import com.rmyh.report.excel.bean.ZbBean;
-import com.rmyh.report.excel.style.XnExportExcel;
 import com.rmyh.report.excel.style.ZbExportExcel;
 import com.rmyh.report.service.Dataquery;
 
 @WebServlet(asyncSupported = true, urlPatterns = { "/excel/getMonitExcel" })
 public class getMonitExcel extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public getMonitExcel() {
 		super();
 	}
@@ -66,9 +60,9 @@ public class getMonitExcel extends HttpServlet {
 			e.printStackTrace();
 		}
 		Collections.sort(triggerBean);
-		List<List<ZbBean>> resBean = new ArrayList();
+		List<List<ZbBean>> resBean = new ArrayList<List<ZbBean>>();
 		ZbExportExcel export = new ZbExportExcel();
-		List<ZbBean> tmpBean = new ArrayList();
+		List<ZbBean> tmpBean = new ArrayList<ZbBean>();
 
 		for (int i = 0, groupIdPre = 0; i < triggerBean.size(); i++) {
 			TriggerBean bean = triggerBean.get(i);
@@ -76,7 +70,7 @@ public class getMonitExcel extends HttpServlet {
 				if (i != 0) {
 					resBean.add(tmpBean);
 				}
-				tmpBean = new ArrayList();
+				tmpBean = new ArrayList<ZbBean>();
 				ZbBean zbBean = new ZbBean();
 				zbBean.setSbName(bean.getHostName());
 				zbBean.setIpAddress(bean.getHostIp());
