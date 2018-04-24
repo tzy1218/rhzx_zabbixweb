@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.io.*;
-import java.util.Properties;
+//import java.util.Properties;
 
 import org.apache.poi.hssf.record.cf.FontFormatting;
 import org.apache.poi.hssf.usermodel.*;
@@ -17,15 +17,15 @@ public class XnExportExcel {
 	
 public static String excelNamePre = "Perf"; 	
 	
-	public Properties initProp() throws IOException {
-		Properties prop = new Properties();
-		String property = System.getProperty("user.dir");
-		File file = new File(property+"/excel.properties");
-		InputStream input = new FileInputStream(file);
-		//    InputStreamReader inputR = new InputStreamReader(input,"utf-8");
-		prop.load(input);
-		return prop;
-	}
+//	public Properties initProp() throws IOException {
+//		Properties prop = new Properties();
+//		String property = System.getProperty("user.dir");
+//		File file = new File(property+"/excel.properties");
+//		InputStream input = new FileInputStream(file);
+//		//    InputStreamReader inputR = new InputStreamReader(input,"utf-8");
+//		prop.load(input);
+//		return prop;
+//	}
 	
 	public void Export (String startTime, String endTime, List<List <XnBean>> list) throws IOException {
 		

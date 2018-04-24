@@ -3,7 +3,7 @@ package com.rmyh.report.excel.style;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
+//import java.util.Properties;
 import java.io.*;
 // import java.util.Properties;
 
@@ -24,26 +24,28 @@ public class GjtyExportExcel {
 	 * @param list
 	 */
 	public static String excelNamePre = "Alert"; 
+	//获取字体
+	public static String getFontName = "\u5B8B\u4F53" ; 
 
-    public Properties initProp() throws IOException {
-    		Properties prop = new Properties();
-    		String property = System.getProperty("user.dir");
-    		File file = new File(property+"/excel.properties");
-        InputStream input = new FileInputStream(file);
-//        InputStreamReader inputR = new InputStreamReader(input,"utf-8");
-        prop.load(input);
-        return prop;
-    }
+//    public Properties initProp() throws IOException {
+//    		Properties prop = new Properties();
+//    		String property = System.getProperty("user.dir");
+//    		File file = new File(property+"/excel.properties");
+//        InputStream input = new FileInputStream(file);
+////        InputStreamReader inputR = new InputStreamReader(input,"utf-8");
+//        prop.load(input);
+//        return prop;
+//    }
 
     
 
 	@SuppressWarnings("deprecation")
 	public void Export(String startTime,String endTime,List<GjBean> list) throws IOException {
 		
-		Properties prop = initProp();
+//		Properties prop = initProp();
 		// 声明一个单子并命名
 		HSSFWorkbook wb = new HSSFWorkbook();
-		HSSFSheet sheet = wb.createSheet(prop.getProperty("gj.sheetTag"));
+		HSSFSheet sheet = wb.createSheet("\u544A\u8B66\u7EDF\u4E00\u62A5\u8868");
 		// 给单子名称一个长度
 		sheet.setDefaultColumnWidth((short) 33);
 		// 生成一个样式
@@ -52,7 +54,7 @@ public class GjtyExportExcel {
 		HSSFRow row = sheet.createRow(0);
 		// 创建第一行第一列
 		HSSFCell cell = row.createCell(0);
-		cell.setCellValue(prop.getProperty("gj.tableTag"));
+		cell.setCellValue("\u6C47\u603B\u544A\u8B66\u62A5\u8868");
 		// 合并第一行的列
 		CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 0, 0, 7);
 		sheet.addMergedRegion(cellRangeAddress);
@@ -60,7 +62,7 @@ public class GjtyExportExcel {
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		// 第一行字体格式(宋体,20,加粗)
 		HSSFFont headFont = wb.createFont();
-		headFont.setFontName(getFontName());
+		headFont.setFontName(getFontName);
 		headFont.setFontHeightInPoints((short) 30);
 		headFont.setTypeOffset(FontFormatting.SS_SUPER);
 		headFont.setBold(true);
@@ -82,7 +84,7 @@ public class GjtyExportExcel {
 		sheet.setColumnWidth(0,
 				cell10.getStringCellValue().toString().length() * 1024);
 		HSSFFont headFont10 = wb.createFont();
-		headFont10.setFontName(getFontName());
+		headFont10.setFontName(getFontName);
 		headFont10.setFontHeightInPoints((short) 11);
 		style10.setFont(headFont10);
 		cell10.setCellStyle(style10);
@@ -92,11 +94,11 @@ public class GjtyExportExcel {
 		// 创建第三行第一列
 		HSSFCell cell20 = row2.createCell(0);
 		HSSFCellStyle style20 = wb.createCellStyle();
-		cell20.setCellValue(prop.getProperty("gj.gjTimeTag"));
+		cell20.setCellValue("\u65F6\u95F4");
 		sheet.setColumnWidth(0,
 				cell20.getStringCellValue().toString().length() * 1024);
 		HSSFFont headFont20 = wb.createFont();
-		headFont20.setFontName(getFontName());
+		headFont20.setFontName(getFontName);
 		headFont20.setFontHeightInPoints((short) 11);
 		style20.setFont(headFont20);
 		// 第三行背景颜色
@@ -110,49 +112,49 @@ public class GjtyExportExcel {
 
 		// 创建第三行第二列
 		HSSFCell cell21 = row2.createCell(1);
-		cell21.setCellValue(prop.getProperty("gj.gjLevelTag"));
+		cell21.setCellValue("\u544A\u8B66\u7EA7\u522B");
 		sheet.setColumnWidth(1,
 				cell21.getStringCellValue().toString().length() * 1024);
 		cell21.setCellStyle(style20);
 		
 	    // 创建第三行第三列
 		HSSFCell cell22 = row2.createCell(2);
-		cell22.setCellValue(prop.getProperty("gj.hostNameTag"));
+		cell22.setCellValue("\u4E3B\u673A\u540D");
 		sheet.setColumnWidth(2,
 				cell22.getStringCellValue().toString().length() * 1024);
 		cell22.setCellStyle(style20);
 		
 		// 创建第三行四列
 		HSSFCell cell23 = row2.createCell(3);
-		cell23.setCellValue(prop.getProperty("gj.ipAddressTag"));
+		cell23.setCellValue("IP\u5730\u5740");
 		sheet.setColumnWidth(3,
 				cell23.getStringCellValue().toString().length() * 1024);
 		cell23.setCellStyle(style20);
 
 		// 创建第三行第五列
 		HSSFCell cell24 = row2.createCell(4);
-		cell24.setCellValue(prop.getProperty("gj.gjFrequencyTag"));
+		cell24.setCellValue("\u544A\u8B66\u6B21\u6570");
 		sheet.setColumnWidth(4,
 				cell24.getStringCellValue().toString().length() * 1024);
 		cell24.setCellStyle(style20);
 
 		// 创建第三行第六列
 		HSSFCell cell25 = row2.createCell(5);
-		cell25.setCellValue(prop.getProperty("gj.gjContentTag"));
+		cell25.setCellValue("\u5177\u4F53\u544A\u8B66\u5185\u5BB9");
 		sheet.setColumnWidth(5,
 				cell25.getStringCellValue().toString().length() * 2048);
 		cell25.setCellStyle(style20);
 
 		// 创建第三行第七列
 		HSSFCell cell26 = row2.createCell(6);
-		cell26.setCellValue(prop.getProperty("gj.stateTag"));
+		cell26.setCellValue("\u72B6\u6001");
 		sheet.setColumnWidth(6,
 				cell26.getStringCellValue().toString().length() * 1024);
 		cell26.setCellStyle(style20);
 
 		// 创建第三行第八列
 		HSSFCell cell27 = row2.createCell(7);
-		cell27.setCellValue(prop.getProperty("gj.confirmstateTag"));
+		cell27.setCellValue("\u786E\u8BA4\u72B6\u6001");
 		sheet.setColumnWidth(7,
 				cell27.getStringCellValue().toString().length() * 1024);
 		cell27.setCellStyle(style20);
@@ -163,7 +165,7 @@ public class GjtyExportExcel {
 		styleData.setWrapText(true);
 		// 第四行字体格式(宋体)
 		HSSFFont headFontStart = wb.createFont();
-		headFontStart.setFontName(getFontName());
+		headFontStart.setFontName(getFontName);
 		headFontStart.setFontHeightInPoints((short) 11);
 		styleData.setFont(headFontStart);
 
@@ -195,15 +197,7 @@ public class GjtyExportExcel {
 		}
 	}
 
-	//获取字体
-	public String getFontName() throws IOException{
-	
-		Properties prop = initProp();
-		
-		String fontName = prop.getProperty("fontName");
-	
-	return fontName;
-}
+
 
 /**
 	 * 各列数据插入的方法
