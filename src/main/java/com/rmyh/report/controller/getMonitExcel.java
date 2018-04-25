@@ -75,7 +75,7 @@ public class getMonitExcel extends HttpServlet {
 				zbBean.setSbName(bean.getHostName());
 				zbBean.setIpAddress(bean.getHostIp());
 				zbBean.setJkObject(bean.getApplicationName());
-				zbBean.setJkxName(bean.getTriggerDescri());
+				zbBean.setJkxName(bean.getItemNames());
 				zbBean.setGjfzbds(bean.getTriggerText());
 				zbBean.setGroupName(bean.getGroupName());
 				zbBean.setState(bean.getStatus());
@@ -90,7 +90,7 @@ public class getMonitExcel extends HttpServlet {
 				zbBean.setSbName(bean.getHostName());
 				zbBean.setIpAddress(bean.getHostIp());
 				zbBean.setJkObject(bean.getApplicationName());
-				zbBean.setJkxName(bean.getTriggerDescri());
+				zbBean.setJkxName(bean.getItemNames());
 				zbBean.setGjfzbds(bean.getTriggerText());
 				zbBean.setGroupName(bean.getGroupName());
 				zbBean.setState(bean.getStatus());

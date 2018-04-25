@@ -1,13 +1,40 @@
 package com.rmyh.report.bean;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TriggerBean implements Comparable<TriggerBean> {
 
-	public String clock = "";//
+	public final static String Family = "basic_info";
+
+	public static Map<String, String> map = new HashMap<String, String>();
+
+	static {
+		map.put("hostId", Family);
+		map.put("hostName", Family);
+		map.put("itemIds", Family);
+		map.put("itemNames", Family);
+		map.put("groupId", Family);
+		map.put("groupName", Family);
+		map.put("triggerId", Family);
+		map.put("triggerValue", Family);
+		map.put("applicationId", Family);
+		map.put("applicationName", Family);
+		map.put("triggerDescri", Family);
+		map.put("hostIp", Family);
+		map.put("triggerText", Family);
+		map.put("status", Family);
+		map.put("priority", Family);
+	}
+	
+//	public String clock = "";//
 	public int hostId = -1;//
 	public int groupId = -1;
 	public int applicationId = -1;
 	public String hostIp = "";
 	public String hostName = "";//
+	public String itemIds = "";
+	public String itemNames = "";//
 	public String groupName = "";
 	public String applicationName = "";
 	public String triggerText = "";//
@@ -17,13 +44,13 @@ public class TriggerBean implements Comparable<TriggerBean> {
 	public String status = "";
 	public String priority = "";
 
-	public String getClock() {
-		return clock;
-	}
-
-	public void setClock(String clock) {
-		this.clock = clock;
-	}
+//	public String getClock() {
+//		return clock;
+//	}
+//
+//	public void setClock(String clock) {
+//		this.clock = clock;
+//	}
 
 	public int getHostId() {
 		return hostId;
@@ -63,6 +90,22 @@ public class TriggerBean implements Comparable<TriggerBean> {
 
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
+	}
+	
+	public String getItemIds() {
+		return itemIds;
+	}
+
+	public void setItemIds(String itemIds) {
+		this.itemIds = itemIds;
+	}
+
+	public String getItemNames() {
+		return itemNames;
+	}
+
+	public void setItemNames(String itemNames) {
+		this.itemNames = itemNames;
 	}
 
 	public String getGroupName() {
@@ -170,6 +213,18 @@ public class TriggerBean implements Comparable<TriggerBean> {
 	}
 
 
+	public String getKey() {
+
+		StringBuilder stringBuilder = new StringBuilder();
+
+		stringBuilder.append("TR");
+		stringBuilder.append(triggerId);
+
+
+		return stringBuilder.toString();
+	}
+	
+	
 	public String toString() {
 
 		StringBuilder stringBuilder = new StringBuilder();
